@@ -3,7 +3,10 @@ public class App {
        // Cria o banco de dados
        DatabaseCreator databaseCreator = new DatabaseCreator();
 
-         // Fechar a conexão após terminar
-         //databaseCreator.closeConnection();
+      TableCreator tables = new TableCreator(databaseCreator.getConnection());
+
+      tables.createUsusarioTable();
+         
+      databaseCreator.closeConnection();
     }
 }
