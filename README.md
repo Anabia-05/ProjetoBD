@@ -6,7 +6,7 @@
 
 <h2> Modelo Lógico</h2>
 
-<img src="gráficos_readme/Logico.png">
+<img src="gráficos_readme/logico.png">
 
 <h2> Modelo Físico</h2>
 
