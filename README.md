@@ -6,6 +6,8 @@
 
 <h2> Modelo Lógico</h2>
 
+<img src="gráficos_readme/Logico.png">
+
 <h2> Modelo Físico</h2>
 
 <h2>Contribuidores:</h2>
