@@ -152,10 +152,9 @@ public class TableCreator {
         "id_op INT AUTO_INCREMENT" +
         "data DATA"+
         "hora TIME"+
-        "tipo_operacao VARCHAR(30) " +
+        "tipo_operacao VARCHAR(30) CHECK(tipo_operacao = 'carregar' OR tipo_operacao = 'atualizar' OR tipo_operacao = 'remover')" +
         "id_usuario INT" +
         "id_arquivo INT" +
-        "CHECK(tipo_operacao = )"+
         "PRIMARY KEY(id_op)" + 
         "FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario)"+
         "FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo))";
