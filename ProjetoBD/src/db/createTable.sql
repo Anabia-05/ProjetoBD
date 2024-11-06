@@ -1,3 +1,4 @@
+CREATE DATABASE IF NOT EXISTS your_database_name;
 CREATE TABLE IF NOT EXISTS plano (
     id_plano INT AUTO_INCREMENT,
     nome VARCHAR(40),
