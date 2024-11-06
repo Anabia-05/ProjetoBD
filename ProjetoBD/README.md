@@ -1,18 +1,17 @@
-## Getting Started
+<h1>Sistema de Banco de Dados para Gerenciamento de Webdriver</h1>
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+<h2> Modelo Conceitual</h2>
 
-## Folder Structure
+<img src="gráficos_readme/conceitual.png">
 
-The workspace contains two folders by default, where:
+<h2> Modelo Lógico</h2>
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+<h2> Modelo Físico</h2>
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+<h2>Contribuidores:</h2>
+<ul>
+  <li>Ana Beatriz de Lima Romero - 850038</li>
+  <li>Gabriela Ribeiro Barbosa Lemos - 848843</li>
+  <li>Guilherme Cavalcanti de Sá Barreto - 849537</li>
+  <li>Pedro Henrique Afonso dos Santos - 849096</li>
+</ul>
