@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS your_database_name;
+CREATE DATABASE IF NOT EXISTS webdriver;
+USE webdriver;
 CREATE TABLE IF NOT EXISTS plano (
     id_plano INT AUTO_INCREMENT,
     nome VARCHAR(40),
