@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Usuario {
@@ -77,5 +80,23 @@ public class Usuario {
                 ", email='" + email + '\'' +
                 ", idInstituicao=" + idInstituicao +
                 '}';
+    }
+
+    public boolean insertUsuario(Connection connection){
+        String sql = "INSERT INTO usuario(login,senha,data_ingresso,email,id_instituicao) VALUES (?,?,?,?,?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, login);
+            stmt.setString(2, senha);
+            stmt.setDate(3, (java.sql.Date) dataIngresso);
+            stmt.setString(4, email);
+            stmt.setInt(5, idInstituicao);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos na tabela instituicao com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

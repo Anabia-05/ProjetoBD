@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Compartilhamento {
@@ -55,5 +58,21 @@ public class Compartilhamento {
                 ", data=" + data +
                 ", idDono=" + idDono +
                 '}';
+    }
+
+    public boolean insertCompart(Connection connection){
+        String sql = "INSERT INTO compartilhamento(id_arquivo,data,id_dono) VALUES (?,?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, idArquivo);
+            stmt.setDate(2, (java.sql.Date) data);
+            stmt.setInt(3, idDono);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos na tabela Compartilhamento com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

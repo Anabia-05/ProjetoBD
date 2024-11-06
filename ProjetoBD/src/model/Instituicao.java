@@ -1,5 +1,9 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+
 public class Instituicao {
     private int idInstituicao;
     private String nome;
@@ -64,5 +68,22 @@ public class Instituicao {
                 ", endereco='" + endereco + '\'' +
                 ", idPlano=" + idPlano +
                 '}';
+    }
+
+    public boolean insertInstituicao(Connection connection){
+        String sql = "INSERT INTO instituicao(nome,causa_social,endereco,id_plano) VALUES (?,?,?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            stmt.setString(2, causaSocial);
+            stmt.setString(3, endereco);
+            stmt.setInt(4, idPlano);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos na tabela instituicao com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

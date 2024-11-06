@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Plano {
@@ -66,5 +69,22 @@ public class Plano {
                 ", dataAquisicao=" + dataAquisicao +
                 ", espacoUsuario=" + espacoUsuario +
                 '}';
+    }
+
+    public boolean insertPlano(Connection connection){
+        String sql = "INSERT INTO plano(nome,duracao,data_aquisicao,espaco_usuario) VALUES (?,?,?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            stmt.setDouble(2, duracao);
+            stmt.setDate(3, (java.sql.Date) dataAquisicao);
+            stmt.setDouble(4, espacoUsuario);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos na tabela plano com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

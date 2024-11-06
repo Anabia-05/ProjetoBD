@@ -1,16 +1,20 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
 import java.util.Date;
 
 public class Operacoes {
     private int idOp;
     private Date data;
-    private String hora;
+    private Time hora;
     private String tipoOperacao;
     private int idUsuario;
     private int idArquivo;
 
-    public Operacoes(int idOp, Date data, String hora, String tipoOperacao, int idUsuario, int idArquivo) {
+    public Operacoes(int idOp, Date data, Time hora, String tipoOperacao, int idUsuario, int idArquivo) {
         this.idOp = idOp;
         this.data = data;
         this.hora = hora;
@@ -35,11 +39,11 @@ public class Operacoes {
         this.data = data;
     }
 
-    public String getHora() {
+    public Time getHora() {
         return hora;
     }
 
-    public void setHora(String hora) {
+    public void setHora(Time hora) {
         this.hora = hora;
     }
 
@@ -77,5 +81,23 @@ public class Operacoes {
                 ", idUsuario=" + idUsuario +
                 ", idArquivo=" + idArquivo +
                 '}';
+    }
+
+    public boolean insertOperacoes(Connection connection){
+        String sql = "INSERT INTO operacoes(data,hora,tipo_operacao,id_usuario,id_arquivo) VALUES (?,?,?,?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setDate(1, (java.sql.Date) data);
+            stmt.setTime(2, hora);
+            stmt.setString(3, tipoOperacao);
+            stmt.setInt(4, idUsuario);
+            stmt.setInt(5, idArquivo);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos na tabela operacoes com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

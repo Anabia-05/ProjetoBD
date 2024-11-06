@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class Arquivo {
@@ -110,5 +113,25 @@ public class Arquivo {
                 ", url='" + url + '\'' +
                 ", idUsuario=" + idUsuario +
                 '}';
+    }
+    public boolean insertArquivo(Connection connection){
+        String sql = "INSERT INTO arquivo(nome,tipo,permissoes_acesso,tamanho,data_ultima_mod,localizacao,URL,id_usuario) VALUES (?,?,?,?,?,?,?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, nome);
+            stmt.setString(2, tipo);
+            stmt.setString(3, permissoesAcesso);
+            stmt.setInt(4, tamanho);
+            stmt.setDate(5,(java.sql.Date) dataUltimaMod);
+            stmt.setString(6, localizacao);
+            stmt.setString(7, url);
+            stmt.setInt(8, idUsuario);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos na tabela arquivo com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
