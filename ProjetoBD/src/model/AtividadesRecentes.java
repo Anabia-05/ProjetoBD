@@ -1,5 +1,8 @@
 package model;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Date;
 
 public class AtividadesRecentes {
@@ -44,5 +47,21 @@ public class AtividadesRecentes {
                 ", ultimaVersao=" + ultimaVersao +
                 ", acesso='" + acesso + '\'' +
                 '}';
+    }
+
+    public boolean insertAtividades(Connection connection){
+        String sql = "INSERT INTO atividades_recentes(id_arquivo,ultima_versao,acesso) VALUES (?,?)";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1,idArquivo);
+            stmt.setDate(2, (java.sql.Date) ultimaVersao);
+            stmt.setString(3, acesso);
+            stmt.executeUpdate();
+            System.out.println("Dados inseridos na tabela atividades com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
