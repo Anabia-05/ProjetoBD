@@ -129,6 +129,13 @@ CREATE TABLE IF NOT EXISTS operacoes (
     FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo)
 );
 
+CREATE TABLE IF NOT EXISTS atividades_recentes (
+    id_arquivo INT,
+    ultima_versao DATE,
+    acesso VARCHAR(20) CHECK(acesso IN ('prioritário', 'não_prioritário')),
+    FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo)
+);
+
 ```
 
 <h2>Contribuidores:</h2>
