@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
@@ -97,6 +98,86 @@ public class Usuario {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    public void printFilesUserHasAccessTo(Connection connection) {
+
+        String sql = "SELECT nome, tipo, permissoes_acesso, tamanho, data_ultima_mod, localizacao, URL " + //coloquei cada nome ao invés de * para deixar mais claro
+        "FROM acesso_arquivos_usuario " +
+        "WHERE id_usuario = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, this.idUsuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                System.out.println("Arquivos que o usuário tem acesso:");
+
+                boolean hasAccess = false;
+
+                while (rs.next()) {
+
+                    String nome = rs.getString("nome");
+                    String tipo = rs.getString("tipo");
+                    String permissoesAcesso = rs.getString("permissoes_acesso");
+                    long tamanho = rs.getLong("tamanho");
+                    String dataUltimaMod = rs.getString("data_ultima_mod");
+                    String localizacao = rs.getString("localizacao");
+                    String url = rs.getString("URL");
+
+                    System.out.println("Nome: " + nome);
+                    System.out.println("Tipo: " + tipo);
+                    System.out.println("Permissões de Acesso: " + permissoesAcesso);
+                    System.out.println("Tamanho: " + tamanho + " bytes");
+                    System.out.println("Data da Última Modificação: " + dataUltimaMod);
+                    System.out.println("Localização: " + localizacao);
+                    System.out.println("URL: " + url);
+
+                    hasAccess = true;
+                }
+
+                if (!hasAccess) {
+                    System.out.println("Este usuário não tem acesso a nenhum arquivo.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void printOperationHistory(Connection connection) {
+        String sql = "SELECT conteudo_mudado, data, hora, usuario_que_alterou " +
+        "FROM historico_usuario " +
+        "WHERE id_usuario = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, this.idUsuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                System.out.println("Histórico de Operações:");
+
+                boolean hasHistory = false;
+
+                while (rs.next()) {
+                    String conteudoMudado = rs.getString("conteudo_mudado");
+                    String data = rs.getString("data");
+                    String hora = rs.getString("hora");
+                    String usuarioQueAlterou = rs.getString("usuario_que_alterou");
+
+                    System.out.println("Conteúdo alterado: " + conteudoMudado);
+                    System.out.println("Data: " + data);
+                    System.out.println("Hora: " + hora);
+                    System.out.println("Alterado por: " + usuarioQueAlterou);
+
+                    hasHistory = true;
+                }
+
+                if (!hasHistory) {
+                    System.out.println("Este usuário não possui histórico de operações.");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
