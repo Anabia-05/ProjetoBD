@@ -163,3 +163,25 @@ WHERE h.id_arquivo IN (
     FROM arquivo
     WHERE id_usuario = CURRENT_USER()
 );
+
+DELIMITER $$ -- para evitar erros (acabar execução na primeira ;)
+CREATE PROCEDURE chavear_arquivo(IN arquivo_id INT)
+BEGIN
+    DECLARE novo_acesso VARCHAR(20);
+
+    SELECT acesso INTO novo_acesso
+    FROM atividades_recentes
+    WHERE id_arquivo = arquivo_id;
+
+    IF novo_acesso = 'prioritário' THEN
+        UPDATE atividades_recentes
+        SET acesso = 'não_prioritário'
+        WHERE id_arquivo = arquivo_id;
+    ELSEIF novo_acesso = 'não_prioritário' THEN
+        UPDATE atividades_recentes
+        SET acesso = 'prioritário'
+        WHERE id_arquivo = arquivo_id;
+    END IF;
+
+END $$
+DELIMITER ;

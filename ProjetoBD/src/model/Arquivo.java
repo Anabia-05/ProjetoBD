@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.CallableStatement;
 import java.util.Date;
 
 public class Arquivo {
@@ -128,6 +129,22 @@ public class Arquivo {
             stmt.setInt(8, idUsuario);
             stmt.executeUpdate();
             System.out.println("Dados inseridos na tabela arquivo com sucesso!");
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean chavearArquivo(Connection connection) {
+        String sql = "{CALL chavear_arquivo(?)}";
+        
+        try (CallableStatement stmt = connection.prepareCall(sql)) {
+            stmt.setInt(1, this.idArquivo);
+    
+            stmt.executeUpdate();
+    
+            System.out.println("Stored procedure executed successfully!");
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
