@@ -11,10 +11,15 @@ public class DBConnection {
     
     public static Connection getConnection() {
         try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
             return DriverManager.getConnection(URL, USER, PASSWORD);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            throw new RuntimeException("MySQL JDBC Driver não encontrado.", e);
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Database connection error.");
+            throw new RuntimeException("Erro ao conectar ao banco de dados.", e);
         }
     }
 }

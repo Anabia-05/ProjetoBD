@@ -7,27 +7,23 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class DatabaseCreator {
-    public static void main(String[] args) {
-        String sqlScriptPath = "ProjetoBD/src/db/createTable.sql";
+    Connection connection;
+    String sqlScriptPath = "ProjetoBD/src/db/createTable.sql";
 
-        try (Connection connection = DBConnection.getConnection()) {
-            System.out.println("Conexão com o banco de dados bem-sucedida!");
-
-            executeSqlScript(connection, sqlScriptPath);
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
+    public DatabaseCreator(Connection connection, String sqlScriptPath) {
+        this.connection = connection;
+        this.sqlScriptPath = sqlScriptPath;
     }
 
-    private static void executeSqlScript(Connection connection, String filePath) {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
+    public void executeSqlScript() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(this.sqlScriptPath))) {
             StringBuilder sql = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 sql.append(line).append("\n");
             }
 
-            try (Statement statement = connection.createStatement()) {
+            try (Statement statement = this.connection.createStatement()) {
                 statement.executeUpdate(sql.toString());
                 System.out.println("Script SQL executado com sucesso!");
             } catch (SQLException e) {
