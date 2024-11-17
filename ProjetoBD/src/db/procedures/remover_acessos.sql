@@ -1,12 +1,14 @@
 
     DELIMITER //
 
-    CREATE PROCEDURE RemoverAcessoUsuarios(IN idArquivo INT)
+    CREATE PROCEDURE RemoverAcessoUsuarios(IN idArquivoEscolhido INT)
     BEGIN
-
         DELETE FROM compartilhamento
-        WHERE id_arquivo = idArquivo
-        AND id_usuario != (SELECT id_dono FROM compartilhamento WHERE id_arquivo = idArquivo LIMIT 1);
+        WHERE id_arquivo = idArquivoEscolhido
+        AND id_dono != (SELECT id_dono 
+                        FROM compartilhamento 
+                        WHERE id_arquivo = idArquivoEscolhido 
+                        LIMIT 1);
     END //
 
     DELIMITER ;
