@@ -7,10 +7,10 @@ import java.util.Date;
 
 public class AtividadesRecentes {
     private int idArquivo;
-    private Date ultimaVersao;
+    private String ultimaVersao;
     private String acesso;
 
-    public AtividadesRecentes(int idArquivo, Date ultimaVersao, String acesso) {
+    public AtividadesRecentes(int idArquivo, String ultimaVersao, String acesso) {
         this.idArquivo = idArquivo;
         this.ultimaVersao = ultimaVersao;
         this.acesso = acesso;
@@ -24,11 +24,11 @@ public class AtividadesRecentes {
         this.idArquivo = idArquivo;
     }
 
-    public Date getUltimaVersao() {
+    public String getUltimaVersao() {
         return ultimaVersao;
     }
 
-    public void setUltimaVersao(Date ultimaVersao) {
+    public void setUltimaVersao(String ultimaVersao) {
         this.ultimaVersao = ultimaVersao;
     }
 
@@ -54,7 +54,7 @@ public class AtividadesRecentes {
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1,idArquivo);
-            stmt.setDate(2, (java.sql.Date) ultimaVersao);
+            stmt.setDate(2, java.sql.Date.valueOf(ultimaVersao));
             stmt.setString(3, acesso);
             stmt.executeUpdate();
             System.out.println("Dados inseridos na tabela atividades com sucesso!");

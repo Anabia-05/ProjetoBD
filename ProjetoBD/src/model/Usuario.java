@@ -10,11 +10,11 @@ public class Usuario {
     private int idUsuario;
     private String login;
     private String senha;
-    private Date dataIngresso;
+    private String dataIngresso;
     private String email;
     private int idInstituicao;
 
-    public Usuario(int idUsuario, String login, String senha, Date dataIngresso, String email, int idInstituicao) {
+    public Usuario(int idUsuario, String login, String senha, String dataIngresso, String email, int idInstituicao) {
         this.idUsuario = idUsuario;
         this.login = login;
         this.senha = senha;
@@ -47,11 +47,11 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public Date getDataIngresso() {
+    public String getDataIngresso() {
         return dataIngresso;
     }
 
-    public void setDataIngresso(Date dataIngresso) {
+    public void setDataIngresso(String dataIngresso) {
         this.dataIngresso = dataIngresso;
     }
 
@@ -89,7 +89,7 @@ public class Usuario {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, login);
             stmt.setString(2, senha);
-            stmt.setDate(3, (java.sql.Date) dataIngresso);
+            stmt.setDate(3, java.sql.Date.valueOf(dataIngresso));
             stmt.setString(4, email);
             stmt.setInt(5, idInstituicao);
             stmt.executeUpdate();

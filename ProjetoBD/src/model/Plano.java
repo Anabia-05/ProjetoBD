@@ -9,10 +9,10 @@ public class Plano {
     private int idPlano;
     private String nome;
     private double duracao;
-    private Date dataAquisicao;
+    private String dataAquisicao;
     private double espacoUsuario;
 
-    public Plano(int idPlano, String nome, double duracao, Date dataAquisicao, double espacoUsuario) {
+    public Plano(int idPlano, String nome, double duracao, String dataAquisicao, double espacoUsuario) {
         this.idPlano = idPlano;
         this.nome = nome;
         this.duracao = duracao;
@@ -44,11 +44,11 @@ public class Plano {
         this.duracao = duracao;
     }
 
-    public Date getDataAquisicao() {
+    public String getDataAquisicao() {
         return dataAquisicao;
     }
 
-    public void setDataAquisicao(Date dataAquisicao) {
+    public void setDataAquisicao(String dataAquisicao) {
         this.dataAquisicao = dataAquisicao;
     }
 
@@ -77,7 +77,7 @@ public class Plano {
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, nome);
             stmt.setDouble(2, duracao);
-            stmt.setDate(3, (java.sql.Date) dataAquisicao);
+            stmt.setDate(3, java.sql.Date.valueOf(dataAquisicao));
             stmt.setDouble(4, espacoUsuario);
             stmt.executeUpdate();
             System.out.println("Dados inseridos na tabela plano com sucesso!");

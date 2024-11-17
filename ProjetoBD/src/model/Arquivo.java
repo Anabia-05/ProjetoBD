@@ -12,12 +12,12 @@ public class Arquivo {
     private String tipo;
     private String permissoesAcesso;
     private int tamanho;
-    private Date dataUltimaMod;
+    private String dataUltimaMod;
     private String localizacao;
     private String url;
     private int idUsuario;
 
-    public Arquivo(int idArquivo, String nome, String tipo, String permissoesAcesso, int tamanho, Date dataUltimaMod, String localizacao, String url, int idUsuario) {
+    public Arquivo(int idArquivo, String nome, String tipo, String permissoesAcesso, int tamanho, String dataUltimaMod, String localizacao, String url, int idUsuario) {
         this.idArquivo = idArquivo;
         this.nome = nome;
         this.tipo = tipo;
@@ -69,11 +69,11 @@ public class Arquivo {
         this.tamanho = tamanho;
     }
 
-    public Date getDataUltimaMod() {
+    public String getDataUltimaMod() {
         return dataUltimaMod;
     }
 
-    public void setDataUltimaMod(Date dataUltimaMod) {
+    public void setDataUltimaMod(String dataUltimaMod) {
         this.dataUltimaMod = dataUltimaMod;
     }
 
@@ -123,7 +123,7 @@ public class Arquivo {
             stmt.setString(2, tipo);
             stmt.setString(3, permissoesAcesso);
             stmt.setInt(4, tamanho);
-            stmt.setDate(5,(java.sql.Date) dataUltimaMod);
+            stmt.setDate(5, java.sql.Date.valueOf(dataUltimaMod));
             stmt.setString(6, localizacao);
             stmt.setString(7, url);
             stmt.setInt(8, idUsuario);

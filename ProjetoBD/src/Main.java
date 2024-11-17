@@ -2,6 +2,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import util.DBConnection;
 import util.DatabaseCreator;
+import model.Plano;
+import model.Instituicao;
+import model.Usuario;
+import model.AdmUsuario;
+import model.AdmUsuario;
+import model.Arquivo;
+
+
 
 public class Main {
     public static void main(String[] args) {

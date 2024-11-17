@@ -8,10 +8,10 @@ import java.util.Date;
 public class Compartilhamento {
     private int idComp;
     private int idArquivo;
-    private Date data;
+    private String data;
     private int idDono;
 
-    public Compartilhamento(int idComp, int idArquivo, Date data, int idDono) {
+    public Compartilhamento(int idComp, int idArquivo, String data, int idDono) {
         this.idComp = idComp;
         this.idArquivo = idArquivo;
         this.data = data;
@@ -34,11 +34,11 @@ public class Compartilhamento {
         this.idArquivo = idArquivo;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
@@ -65,7 +65,7 @@ public class Compartilhamento {
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, idArquivo);
-            stmt.setDate(2, (java.sql.Date) data);
+            stmt.setDate(2, java.sql.Date.valueOf(data));
             stmt.setInt(3, idDono);
             stmt.executeUpdate();
             System.out.println("Dados inseridos na tabela Compartilhamento com sucesso!");

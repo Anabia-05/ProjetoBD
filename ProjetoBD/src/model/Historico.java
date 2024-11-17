@@ -9,12 +9,12 @@ import java.util.Date;
 public class Historico {
     private int idHistorico;      
     private String conteudoMudado;
-    private Date data;           
-    private Time hora;         
+    private String data;           
+    private String hora;         
     private int idUsuarioAlterou;
     private int idArquivo;
 
-    public Historico(int idHistorico, String conteudoMudado, Date data, Time hora, int idUsuarioAlterou, int idArquivo) {
+    public Historico(int idHistorico, String conteudoMudado, String data, String hora, int idUsuarioAlterou, int idArquivo) {
         this.idHistorico = idHistorico;
         this.conteudoMudado = conteudoMudado;
         this.data = data;
@@ -39,19 +39,19 @@ public class Historico {
         this.conteudoMudado = conteudoMudado;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
@@ -88,8 +88,8 @@ public class Historico {
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, conteudoMudado);
-            stmt.setDate(2, (java.sql.Date) data);
-            stmt.setTime(3, hora);
+            stmt.setDate(2, java.sql.Date.valueOf(data));
+            stmt.setTime(3, java.sql.Time.valueOf(hora));
             stmt.setInt(4, idUsuarioAlterou);
             stmt.setInt(5, idArquivo);
             stmt.executeUpdate();

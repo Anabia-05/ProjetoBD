@@ -9,12 +9,12 @@ import java.util.Date;
 public class Comentario {
     private int idComent;
     private String conteudo;
-    private Date data;
-    private Time hora;
+    private String data;
+    private String hora;
     private int idUsuario;
     private int idArquivo;
 
-    public Comentario(int idComent, String conteudo, Date data, Time hora, int idUsuario, int idArquivo) {
+    public Comentario(int idComent, String conteudo, String data, String hora, int idUsuario, int idArquivo) {
         this.idComent = idComent;
         this.conteudo = conteudo;
         this.data = data;
@@ -39,19 +39,19 @@ public class Comentario {
         this.conteudo = conteudo;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
@@ -87,8 +87,8 @@ public class Comentario {
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, conteudo);
-            stmt.setDate(2, (java.sql.Date) data);
-            stmt.setTime(3, hora);
+            stmt.setDate(2, java.sql.Date.valueOf(data));
+            stmt.setTime(3, java.sql.Time.valueOf(hora));
             stmt.setInt(4, idUsuario);
             stmt.setInt(5, idArquivo);
             stmt.executeUpdate();

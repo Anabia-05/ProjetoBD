@@ -9,13 +9,13 @@ import java.util.Date;
 public class Suporte {
     private int idSuporte;
     private String descricao;
-    private Date data;
-    private Time hora;
+    private String data;
+    private String hora;
     private int idUsuario;
     private int idArquivo;
     private int idAdm;
 
-    public Suporte(int idSuporte, String descricao, Date data, Time hora, int idUsuario, int idArquivo, int idAdm) {
+    public Suporte(int idSuporte, String descricao, String data, String hora, int idUsuario, int idArquivo, int idAdm) {
         this.idSuporte = idSuporte;
         this.descricao = descricao;
         this.data = data;
@@ -41,19 +41,19 @@ public class Suporte {
         this.descricao = descricao;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public Time getHora() {
+    public String getHora() {
         return hora;
     }
 
-    public void setHora(Time hora) {
+    public void setHora(String hora) {
         this.hora = hora;
     }
 
@@ -99,8 +99,8 @@ public class Suporte {
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, descricao);
-            stmt.setDate(2, (java.sql.Date) data);
-            stmt.setTime(3, hora);
+            stmt.setDate(2, java.sql.Date.valueOf(data));
+            stmt.setTime(3, java.sql.Time.valueOf(hora));
             stmt.setInt(4, idUsuario);
             stmt.setInt(5, idArquivo);
             stmt.setInt(6, idAdm);
