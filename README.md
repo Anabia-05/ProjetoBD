@@ -141,7 +141,32 @@ CREATE TABLE IF NOT EXISTS atividades_recentes (
 <h2>Contribuidores:</h2>
 <ul>
   <li>Ana Beatriz de Lima Romero - 850038</li>
+    <ul>
+        <li>Modelo Conceitual</li>
+        <li>Modelo Lógico</li>
+        <li>Modelo Físico</li>
+        <li>Insert</li>
+        <li>Roles</li>
+    </ul>
   <li>Gabriela Ribeiro Barbosa Lemos - 848843</li>
+    <ul>
+        <li>Modelo Conceitual</li>
+        <li>Modelo Lógico</li>
+        <li>Modelo Físico</li>
+        <li>Views</li>
+        <li>Classes das Entidades</li>
+    </ul>
   <li>Guilherme Cavalcanti de Sá Barreto - 849537</li>
+    <ul>
+        <li>Triggers</li>
+        <li>Procedures</li>
+        <li>Update</li>
+        <li>Remove</li>
+    </ul>
   <li>Pedro Henrique Afonso dos Santos - 849096</li>
+    <ul>
+        <li>Modelo Lógico</li>
+        <li>Procedures</li>
+        <li>Function</li>
+    </ul>
 </ul>
