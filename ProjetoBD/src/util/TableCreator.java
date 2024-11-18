@@ -175,8 +175,87 @@ public class TableCreator {
         executeSQL(view3, "View 'historico_usuario' criada com sucesso!");
     }
  
-    
- 
+    //procedures
+    public void createProcedures() {
+        String atualizarArquivo = "CREATE PROCEDURE AtualizarArquivo(IN p_id_arquivo INT, IN p_nome VARCHAR(30), " +
+              "IN p_tipo VARCHAR(10), IN p_permissoes_acesso VARCHAR(50), IN p_tamanho INT, " +
+              "IN p_data_ultima_mod DATE, IN p_localizacao VARCHAR(10), IN p_url VARCHAR(50), " +
+              "IN p_id_usuario INT) " +
+              "BEGIN " +
+              "UPDATE arquivo SET nome = p_nome, tipo = p_tipo, permissoes_acesso = p_permissoes_acesso, " +
+              "tamanho = p_tamanho, data_ultima_mod = p_data_ultima_mod, localizacao = p_localizacao, " +
+              "URL = p_url, id_usuario = p_id_usuario WHERE id_arquivo = p_id_arquivo; " +
+              "END;";
+        executeSQL(atualizarArquivo, "Procedure 'AtualizarArquivo' criada com sucesso!");
+ 
+        String atualizarPlano = "CREATE PROCEDURE AtualizarPlano(IN p_id_plano INT, IN p_nome VARCHAR(40), " +
+              "IN p_duracao DOUBLE, IN p_data_aquisicao DATE, IN p_espaco_usuario DOUBLE) " +
+              "BEGIN " +
+              "UPDATE plano SET nome = p_nome, duracao = p_duracao, data_aquisicao = p_data_aquisicao, " +
+              "espaco_usuario = p_espaco_usuario WHERE id_plano = p_id_plano; " +
+              "END;";
+        executeSQL(atualizarPlano, "Procedure 'AtualizarPlano' criada com sucesso!");
+ 
+        String atualizarUsuario = "CREATE PROCEDURE AtualizarUsuario(IN p_id_usuario INT, IN p_login VARCHAR(40), " +
+              "IN p_senha VARCHAR(10), IN p_data_ingresso DATE, IN p_email VARCHAR(40), " +
+              "IN p_id_instituicao INT) " +
+              "BEGIN " +
+              "UPDATE usuario SET login = p_login, senha = p_senha, data_ingresso = p_data_ingresso, " +
+              "email = p_email, id_instituicao = p_id_instituicao WHERE id_usuario = p_id_usuario; " +
+              "END;";
+        executeSQL(atualizarUsuario, "Procedure 'AtualizarUsuario' criada com sucesso!");
+ 
+        String contaUsuarios = "CREATE PROCEDURE conta_usuarios(IN idArquivoEscolhido INT) " +
+              "BEGIN " +
+              "DECLARE contUsuario INT DEFAULT 0; " +
+              "SELECT COUNT(DISTINCT id_usuario) INTO contUsuario FROM compartilhamento WHERE id_arquivo = idArquivoEscolhido; " +
+              "SELECT contUsuario; " +
+              "END;";
+        executeSQL(contaUsuarios, "Procedure 'conta_usuarios' criada com sucesso!");
+ 
+        String removerAcessoUsuarios = "CREATE PROCEDURE RemoverAcessoUsuarios(IN idArquivoEscolhido INT) " +
+              "BEGIN " +
+              "DELETE FROM compartilhamento WHERE id_arquivo = idArquivoEscolhido " +
+              "AND id_dono != (SELECT id_dono FROM compartilhamento WHERE id_arquivo = idArquivoEscolhido LIMIT 1); " +
+              "END;";
+        executeSQL(removerAcessoUsuarios, "Procedure 'RemoverAcessoUsuarios' criada com sucesso!");
+ 
+        String removerArquivo = "CREATE PROCEDURE RemoverArquivo(IN p_id_arquivo INT) " +
+              "BEGIN " +
+              "DELETE FROM arquivo WHERE id_arquivo = p_id_arquivo; " +
+              "END;";
+        executeSQL(removerArquivo, "Procedure 'RemoverArquivo' criada com sucesso!");
+ 
+        String removerPlano = "CREATE PROCEDURE RemoverPlano(IN p_id_plano INT) " +
+              "BEGIN " +
+              "DELETE FROM plano WHERE id_plano = p_id_plano; " +
+              "END;";
+        executeSQL(removerPlano, "Procedure 'RemoverPlano' criada com sucesso!");
+ 
+        String removerUsuario = "CREATE PROCEDURE RemoverUsuario(IN p_id_usuario INT) " +
+              "BEGIN " +
+              "DELETE FROM usuario WHERE id_usuario = p_id_usuario; " +
+              "END;";
+        executeSQL(removerUsuario, "Procedure 'RemoverUsuario' criada com sucesso!");
+ 
+        String verificarAtividades = "CREATE PROCEDURE verificar_atividades() " +
+              "BEGIN " +
+              "UPDATE atividades_recentes SET ultima_versao = CURRENT_DATE; " +
+              "END;";
+        executeSQL(verificarAtividades, "Procedure 'verificar_atividades' criada com sucesso!");
+ 
+        String chavearArquivo = "CREATE PROCEDURE chavear_arquivo(IN arquivo_id INT) " +
+              "BEGIN " +
+              "DECLARE novo_acesso VARCHAR(20); " +
+              "SELECT acesso INTO novo_acesso FROM atividades_recentes WHERE id_arquivo = arquivo_id; " +
+              "IF novo_acesso = 'prioritário' THEN " +
+              "UPDATE atividades_recentes SET acesso = 'não_prioritário' WHERE id_arquivo = arquivo_id; " +
+              "ELSEIF novo_acesso = 'não_prioritário' THEN " +
+              "UPDATE atividades_recentes SET acesso = 'prioritário' WHERE id_arquivo = arquivo_id; " +
+              "END IF; " +
+              "END;";
+        executeSQL(chavearArquivo, "Procedure 'chavear_arquivo' criada com sucesso!");
+    }
  
   
 
