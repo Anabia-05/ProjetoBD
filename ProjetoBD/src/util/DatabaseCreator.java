@@ -30,6 +30,9 @@ public class DatabaseCreator {
             tableCreator.createAtividadesRecentTable();
             tableCreator.createViews();
             tableCreator.createProcedures();
+            tableCreator.createRolePapelUsuario();
+            tableCreator.createRolePapelInst();
+            tableCreator.createRolePapelAdm();
  
             System.out.println("Todas as tabelas foram criadas com sucesso!");
         } catch (Exception e) {
