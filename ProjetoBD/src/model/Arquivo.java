@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.CallableStatement;
-import java.util.Date;
+
 
 public class Arquivo {
     private int idArquivo;

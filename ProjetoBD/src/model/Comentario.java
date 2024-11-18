@@ -3,8 +3,6 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.Date;
 
 public class Comentario {
     private int idComent;
