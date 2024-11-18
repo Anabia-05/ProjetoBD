@@ -30,7 +30,7 @@ public class DatabaseCreator {
             tableCreator.createAtividadesRecentTable();
             tableCreator.createViews();
             tableCreator.createProcedures();
-            tableCreator.createRolePapelUsuario();
+            tableCreator.createRolePapelUsuario(1);
             tableCreator.createRolePapelInst();
             tableCreator.createRolePapelAdm();
  
