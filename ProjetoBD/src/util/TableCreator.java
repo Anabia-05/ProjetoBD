@@ -48,8 +48,8 @@ public class TableCreator {
         executeSQL(sql, "Tabela 'usuario' criada com sucesso!");
     }
  
-    public void createAdministracaoTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS administracao (" +
+    public void createAdmUsuarioTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS adm_usuario (" +
                 "id_adm INT, " +
                 "id_usuario_administrado INT, " +
                 "FOREIGN KEY(id_usuario_administrado) REFERENCES usuario(id_usuario), " +
@@ -151,7 +151,14 @@ public class TableCreator {
                 "FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo))";
         executeSQL(sql, "Tabela 'operacoes' criada com sucesso!");
     }
- 
+    public void createAtividadesRecentTable() {
+        String sql = "CREATE TABLE IF NOT EXISTS atividades_recentes (" +
+                "id_arquivo INT, " +
+                "ultima_versao DATE, " +
+                "acesso VARCHAR(20) CHECK(acesso IN ('prioritário', 'não_prioritário')), " +
+                "FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo))";
+        executeSQL(sql, "Tabela 'atividades_recentes' criada com sucesso!");
+    }
     
     public void createViews() {
         String view1 = "CREATE VIEW acesso_arquivos_admin AS " +
