@@ -13,4 +13,4 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO PapelAdm;
 -- 5. Conceder permissões para futuros objetos criados (novas tabelas)
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO PapelAdm;
 
-GRANT PapelInstituicao TO 'webdriver_user'@'localhost';
+GRANT PapelAdm TO 'webdriver_user'@'localhost';
