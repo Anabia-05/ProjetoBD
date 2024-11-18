@@ -19,7 +19,7 @@ public class DatabaseCreator {
             tableCreator.createPlanoTable();
             tableCreator.createInstituicaoTable();
             tableCreator.createUsuarioTable();
-            tableCreator.createAdministracaoTable();
+            tableCreator.createAdmUsuarioTable();;
             tableCreator.createAdministradorTable();
             tableCreator.createSuporteTable();
             tableCreator.createArquivoTable();
@@ -27,6 +27,7 @@ public class DatabaseCreator {
             tableCreator.createComentarioTable();
             tableCreator.createHistoricoTable();
             tableCreator.createOperacoesTable();
+            tableCreator.createAtividadesRecentTable();
             tableCreator.createViews();
  
             System.out.println("Todas as tabelas foram criadas com sucesso!");
