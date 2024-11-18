@@ -14,8 +14,7 @@ public class Usuario {
     private String email;
     private int idInstituicao;
 
-    public Usuario(int idUsuario, String login, String senha, String dataIngresso, String email, int idInstituicao) {
-        this.idUsuario = idUsuario;
+    public Usuario( String login, String senha, String dataIngresso, String email, int idInstituicao) {
         this.login = login;
         this.senha = senha;
         this.dataIngresso = dataIngresso;
@@ -83,23 +82,39 @@ public class Usuario {
                 '}';
     }
 
-    public boolean insertUsuario(Connection connection){
-        String sql = "INSERT INTO usuario(login,senha,data_ingresso,email,id_instituicao) VALUES (?,?,?,?,?,?)";
-
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+    public boolean insertUsuario(Connection connection) {
+        String sql = "INSERT INTO usuario(login, senha, data_ingresso, email, id_instituicao) VALUES (?, ?, ?, ?, ?)";
+        
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
+            // Definindo os parâmetros para o PreparedStatement
             stmt.setString(1, login);
             stmt.setString(2, senha);
             stmt.setDate(3, java.sql.Date.valueOf(dataIngresso));
             stmt.setString(4, email);
             stmt.setInt(5, idInstituicao);
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos na tabela instituicao com sucesso!");
-            return true;
+            
+            int affectedRows = stmt.executeUpdate();
+            
+            // Verificando se alguma linha foi afetada
+            if (affectedRows > 0) {
+                // pegando o id gerado pelo auto increment da insercao
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idUsuario = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Usuário inserido com ID: " + this.idUsuario);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+    
 
     public void printFilesUserHasAccessTo(Connection connection) {
 

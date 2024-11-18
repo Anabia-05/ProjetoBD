@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Instituicao {
@@ -11,8 +12,7 @@ public class Instituicao {
     private String endereco;
     private int idPlano;
 
-    public Instituicao(int idInstituicao, String nome, String causaSocial, String endereco, int idPlano) {
-        this.idInstituicao = idInstituicao;
+    public Instituicao(String nome, String causaSocial, String endereco, int idPlano) {
         this.nome = nome;
         this.causaSocial = causaSocial;
         this.endereco = endereco;
@@ -78,9 +78,21 @@ public class Instituicao {
             stmt.setString(2, causaSocial);
             stmt.setString(3, endereco);
             stmt.setInt(4, idPlano);
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos na tabela instituicao com sucesso!");
-            return true;
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+            
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idInstituicao = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Instituicao inserido com ID: " + this.idInstituicao);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

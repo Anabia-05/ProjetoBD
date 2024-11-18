@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -13,8 +14,7 @@ public class Historico {
     private int idUsuarioAlterou;
     private int idArquivo;
 
-    public Historico(int idHistorico, String conteudoMudado, String data, String hora, int idUsuarioAlterou, int idArquivo) {
-        this.idHistorico = idHistorico;
+    public Historico(String conteudoMudado, String data, String hora, int idUsuarioAlterou, int idArquivo) {
         this.conteudoMudado = conteudoMudado;
         this.data = data;
         this.hora = hora;
@@ -91,9 +91,21 @@ public class Historico {
             stmt.setTime(3, java.sql.Time.valueOf(hora));
             stmt.setInt(4, idUsuarioAlterou);
             stmt.setInt(5, idArquivo);
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos na tabela historico com sucesso!");
-            return true;
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+            
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idHistorico = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Historico inserido com ID: " + this.idHistorico);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
@@ -12,8 +13,7 @@ public class Plano {
     private String dataAquisicao;
     private double espacoUsuario;
 
-    public Plano(int idPlano, String nome, double duracao, String dataAquisicao, double espacoUsuario) {
-        this.idPlano = idPlano;
+    public Plano(String nome, double duracao, String dataAquisicao, double espacoUsuario) {
         this.nome = nome;
         this.duracao = duracao;
         this.dataAquisicao = dataAquisicao;
@@ -79,9 +79,21 @@ public class Plano {
             stmt.setDouble(2, duracao);
             stmt.setDate(3, java.sql.Date.valueOf(dataAquisicao));
             stmt.setDouble(4, espacoUsuario);
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos na tabela plano com sucesso!");
-            return true;
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+            
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idPlano = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Plano inserido com ID: " + this.idPlano);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

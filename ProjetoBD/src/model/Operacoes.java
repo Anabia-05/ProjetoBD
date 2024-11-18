@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Operacoes {
@@ -92,7 +93,21 @@ public class Operacoes {
             stmt.setInt(5, idArquivo);
             stmt.executeUpdate();
             System.out.println("Dados inseridos na tabela operacoes com sucesso!");
-            return true;
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+            
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idOp = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Operacoes inserido com ID: " + this.idOp);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

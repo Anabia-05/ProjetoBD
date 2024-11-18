@@ -50,7 +50,7 @@ public class AtividadesRecentes {
     }
 
     public boolean insertAtividades(Connection connection){
-        String sql = "INSERT INTO atividades_recentes(id_arquivo,ultima_versao,acesso) VALUES (?,?)";
+        String sql = "INSERT INTO atividades_recentes(id_arquivo,ultima_versao,acesso) VALUES (?,?,?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1,idArquivo);
