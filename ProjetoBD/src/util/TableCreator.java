@@ -1,6 +1,7 @@
 package util;
  
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
  
@@ -264,13 +265,14 @@ public class TableCreator {
         executeSQL(chavearArquivo, "Procedure 'chavear_arquivo' criada com sucesso!");
     }
     
-    public void createRolePapelUsuario(){
+    public void createRolePapelUsuario(int idUsuario){
 
         String CreateRolePU = "CREATE ROLE IF NOT EXISTS PapelUsuario";
         executeSQL(CreateRolePU, "Role 'PapelUsuario' criada com sucesso!");
         
         String createViewSQL = "CREATE VIEW arquivos_usuario AS " +
-                               "SELECT * FROM arquivo WHERE id_usuario = ?";
+                               "SELECT * FROM arquivo WHERE id_usuario = " + idUsuario;
+        
 
         executeSQL(createViewSQL, "View 'arquivos_usuario' criada com sucesso!");
 
@@ -306,22 +308,16 @@ public class TableCreator {
         String CreateRolePU = "CREATE ROLE IF NOT EXISTS PapelAdm";
         executeSQL(CreateRolePU, "Role 'PapelAdm' criada com sucesso!");
         
-        String grantPermission = "GRANT SELECT, INSERT, UPDATE, DELETE ON DATABASE seu_banco.* TO PapelAdm";
+        String grantPermission = "GRANT SELECT, INSERT, UPDATE, DELETE ON webdriver.* TO PapelAdm";
         executeSQL(grantPermission, " Conceder permissões de leitura, inserção, atualização e exclusão em todas as tabelas do banco de dados.");
-
-        String grantPermUsage = "GRANT USAGE ON SCHEMA public TO PapelAdm";
-        executeSQL(grantPermUsage, "Conceder permissão de USAGE no banco de dados .");
-        
-        String grantAllPermissions = " GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO PapelAdm";
-        executeSQL(grantAllPermissions, "Conceder permissões de leitura, inserção, atualização e exclusão em todas as tabelas e visões");
-
-        String grantFuturePermissions = " GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO PapelAdm";
-        executeSQL(grantFuturePermissions, "Conceder permissões para futuros objetos criados.");
+      
 
         String grantRoleToUserSQL = "GRANT PapelAdm TO 'webdriver_user'@'localhost'";
         executeSQL(grantRoleToUserSQL, "Role concedida ao usuário 'webdriver_user'.");
  
     }
+
+    
     
      
     private void executeSQL(String sql, String successMessage) {
