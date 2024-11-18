@@ -152,8 +152,28 @@ public class TableCreator {
         executeSQL(sql, "Tabela 'operacoes' criada com sucesso!");
     }
  
-    // Métodos para criação de views
     
+    public void createViews() {
+        String view1 = "CREATE VIEW acesso_arquivos_admin AS " +
+                "SELECT a.nome, a.tipo, a.permissoes_acesso, a.tamanho, a.data_ultima_mod, a.localizacao, a.URL " +
+                "FROM arquivo a;";
+        executeSQL(view1, "View 'acesso_arquivos_admin' criada com sucesso!");
+ 
+        String view2 = "CREATE VIEW acesso_arquivos_usuario AS " +
+                "SELECT a.nome, a.tipo, a.permissoes_acesso, a.tamanho, a.data_ultima_mod, a.localizacao, a.URL " +
+                "FROM arquivo a " +
+                "JOIN compartilhamento c ON a.id_arquivo = c.id_arquivo " +
+                "JOIN usuario u ON u.id_usuario = c.id_dono " +
+                "WHERE u.id_usuario = CURRENT_USER();";
+        executeSQL(view2, "View 'acesso_arquivos_usuario' criada com sucesso!");
+ 
+        String view3 = "CREATE VIEW historico_usuario AS " +
+                "SELECT h.conteudo_mudado, h.data, h.hora, u.login AS usuario_que_alterou " +
+                "FROM historico h " +
+                "JOIN usuario u ON u.id_usuario = h.id_usuario_alterou " +
+                "WHERE h.id_arquivo IN (SELECT id_arquivo FROM arquivo WHERE id_usuario = CURRENT_USER());";
+        executeSQL(view3, "View 'historico_usuario' criada com sucesso!");
+    }
  
     
  
