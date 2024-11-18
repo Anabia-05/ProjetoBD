@@ -28,6 +28,7 @@ public class DatabaseCreator {
             tableCreator.createHistoricoTable();
             tableCreator.createOperacoesTable();
             tableCreator.createViews();
+            tableCreator.createProcedures();
  
             System.out.println("Todas as tabelas foram criadas com sucesso!");
         } catch (Exception e) {
