@@ -1,5 +1,15 @@
-<h1>Sistema de Banco de Dados para Gerenciamento de Webdriver</h1>
+<h1 align='center'>Sistema de Gerenciamento de Webdriver</h1>
 
+<p align='center'> <img src="https://img.shields.io/badge/made_with-MySQL-4479A1" alt="MySQL Badge">
+  <img src="https://img.shields.io/badge/made_with-Java-e76f01" alt="Java Badge">
+  <img src="https://img.shields.io/badge/made_with-Draw.io-F08705" alt="Draw.io Badge"></p>
+
+<h3 align='center'> Sistema com banco de dados para uma plataforma de gerenciamento de arquivos.</h3>
+
+</span>
+
+<h2>Visão Geral</h2>
+<p>O sistema oferece uma interface para upload e gerenciamento de arquivos, com funcionalidades como criação, atualização, remoção e visualização de arquivos. Além disso, há controle de acesso, versionamento e suporte ao histórico de operações, com suporte para diferentes papéis e permissões.</p>
 <h2> Modelo Conceitual</h2>
 
 <img src="gráficos_readme/conceitual.png">
