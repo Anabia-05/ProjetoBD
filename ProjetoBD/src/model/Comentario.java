@@ -83,7 +83,7 @@ public class Comentario {
     public boolean insertComent(Connection connection){
         String sql = "INSERT INTO comentario(conteudo,data,hora,id_usuario,id_arquivo) VALUES (?,?,?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, conteudo);
             stmt.setDate(2, java.sql.Date.valueOf(data));
             stmt.setTime(3, java.sql.Time.valueOf(hora));
@@ -92,7 +92,7 @@ public class Comentario {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-            
+
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.idComent = generatedKeys.getInt(1); // Obtendo o ID gerado

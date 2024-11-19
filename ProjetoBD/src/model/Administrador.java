@@ -39,10 +39,10 @@ public class Administrador {
     public boolean insertAdm(Connection connection){
         String sql = "INSERT INTO admistrador(id_usuario_adm) VALUES (?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, idUsuarioAdm);
             int affectedRows = stmt.executeUpdate();
-            
+
             if (affectedRows > 0) {
                 // pegando o id gerado pelo auto increment da insercao
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {

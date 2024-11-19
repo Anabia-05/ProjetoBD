@@ -48,8 +48,8 @@ public class Main {
             System.out.println("10. Chavear prioridade de um arquivo");
             System.out.println("11. Remover acessos de arquivo (exceto do proprietário)");
             System.out.println("12. Verificar inatividade de um arquivo");
-            System.out.println("13. Buscar Arquivo");
-            System.out.println("14. Buscar usuário");
+            System.out.println("13. Buscar Usuario");
+            System.out.println("14. Buscar Arquivo");
             System.out.println("15. Buscar plano");
             System.out.println("16. Acessar view: Arquivos administrados");
             System.out.println("17. Acessar view: Arquivos do usuário");
@@ -136,33 +136,33 @@ public class Main {
     private static void inserirDadosIniciais(Connection connection) {
       try {
         // Inserção dos planos
-        Plano plano1 = new Plano(0, "Plano Básico", 12.0, "2024-01-01", 50.0);
+        Plano plano1 = new Plano( "Plano Básico", 12.0, "2024-01-01", 50.0);
         if (plano1.insertPlano(connection)) {
             System.out.println("Plano Básico inserido com sucesso!");
         }
 
-        Plano plano2 = new Plano(0, "Plano Premium", 24.0, "2024-05-10", 100.0);
+        Plano plano2 = new Plano( "Plano Premium", 24.0, "2024-05-10", 100.0);
         if (plano2.insertPlano(connection)) {
             System.out.println("Plano Premium inserido com sucesso!");
         }
 
-        Plano plano3 = new Plano(0, "Plano Corporativo", 36.0, "2023-10-20", 200.0);
+        Plano plano3 = new Plano( "Plano Corporativo", 36.0, "2023-10-20", 200.0);
         if (plano3.insertPlano(connection)) {
             System.out.println("Plano Corporativo inserido com sucesso!");
         }
 
         // Inserção das instituições
-        Instituicao instituicao1 = new Instituicao(0, "Instituição A", "Educação", "Rua A, 123", 1);
+        Instituicao instituicao1 = new Instituicao( "Instituição A", "Educação", "Rua A, 123", 1);
         if (instituicao1.insertInstituicao(connection)) {
             System.out.println("Instituição A inserida com sucesso!");
         }
 
-        Instituicao instituicao2 = new Instituicao(0, "Instituição B", "Saúde", "Av. Central, 456", 2);
+        Instituicao instituicao2 = new Instituicao( "Instituição B", "Saúde", "Av. Central, 456", 2);
         if (instituicao2.insertInstituicao(connection)) {
             System.out.println("Instituição B inserida com sucesso!");
         }
 
-        Instituicao instituicao3 = new Instituicao(0, "Instituição C", "Meio Ambiente", "Praça Nova, 789", 3);
+        Instituicao instituicao3 = new Instituicao( "Instituição C", "Meio Ambiente", "Praça Nova, 789", 3);
         if (instituicao3.insertInstituicao(connection)) {
             System.out.println("Instituição C inserida com sucesso!");
         }
@@ -184,7 +184,7 @@ public class Main {
         }
 
         // Inserção do administrador
-        Administrador administrador = new Administrador(0, 1);  // Apenas o Usuário 1 será o administrador
+        Administrador administrador = new Administrador(1);  // Apenas o Usuário 1 será o administrador
         if (administrador.insertAdm(connection)) {
             System.out.println("Administrador inserido com sucesso!");
         }
@@ -201,17 +201,17 @@ public class Main {
         }
 
         // Inserção dos arquivos
-        Arquivo arquivo1 = new Arquivo(0, "documento1.pdf", "pdf", "leitura", 1024, "2024-03-01", "local1", "https://example.com/documento1", 1);
+        Arquivo arquivo1 = new Arquivo( "documento1.pdf", "pdf", "leitura", 1024, "2024-03-01", "local1", "https://example.com/documento1", 1);
         if (arquivo1.insertArquivo(connection)) {
             System.out.println("Arquivo 'documento1.pdf' inserido com sucesso!");
         }
 
-        Arquivo arquivo2 = new Arquivo(0, "planilha1.xlsx", "excel", "leitura/escrita", 2048, "2024-03-10", "local2", "https://example.com/planilha1", 2);
+        Arquivo arquivo2 = new Arquivo( "planilha1.xlsx", "excel", "leitura/escrita", 2048, "2024-03-10", "local2", "https://example.com/planilha1", 2);
         if (arquivo2.insertArquivo(connection)) {
             System.out.println("Arquivo 'planilha1.xlsx' inserido com sucesso!");
         }
 
-        Arquivo arquivo3 = new Arquivo(0, "imagem1.jpg", "imagem", "leitura", 512, "2024-03-15", "local3", "https://example.com/imagem1", 3);
+        Arquivo arquivo3 = new Arquivo( "imagem1.jpg", "imagem", "leitura", 512, "2024-03-15", "local3", "https://example.com/imagem1", 3);
         if (arquivo3.insertArquivo(connection)) {
             System.out.println("Arquivo 'imagem1.jpg' inserido com sucesso!");
         }

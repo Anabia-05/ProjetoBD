@@ -74,7 +74,7 @@ public class Plano {
     public boolean insertPlano(Connection connection){
         String sql = "INSERT INTO plano(nome,duracao,data_aquisicao,espaco_usuario) VALUES (?,?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, nome);
             stmt.setDouble(2, duracao);
             stmt.setDate(3, java.sql.Date.valueOf(dataAquisicao));
@@ -82,7 +82,7 @@ public class Plano {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-            
+
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.idPlano = generatedKeys.getInt(1); // Obtendo o ID gerado

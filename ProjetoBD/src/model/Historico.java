@@ -7,10 +7,10 @@ import java.sql.SQLException;
 
 
 public class Historico {
-    private int idHistorico;      
+    private int idHistorico;
     private String conteudoMudado;
-    private String data;           
-    private String hora;         
+    private String data;
+    private String hora;
     private int idUsuarioAlterou;
     private int idArquivo;
 
@@ -85,7 +85,7 @@ public class Historico {
     public boolean insertHistorico(Connection connection){
         String sql = "INSERT INTO historico(conteudo_mudado,data,hora,id_usuario_alterou,id_arquivo) VALUES (?,?,?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql , PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, conteudoMudado);
             stmt.setDate(2, java.sql.Date.valueOf(data));
             stmt.setTime(3, java.sql.Time.valueOf(hora));
@@ -94,7 +94,7 @@ public class Historico {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-            
+
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.idHistorico = generatedKeys.getInt(1); // Obtendo o ID gerado

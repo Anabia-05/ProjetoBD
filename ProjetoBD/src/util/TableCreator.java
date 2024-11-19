@@ -47,14 +47,16 @@ public class TableCreator {
         executeSQL(sql, "Tabela 'usuario' criada com sucesso!");
     }
 
-    public void createAdministracaoTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS administracao (" +
-                "id_adm INT, " +
-                "id_usuario_administrado INT, " +
-                "FOREIGN KEY(id_usuario_administrado) REFERENCES usuario(id_usuario) ON DELETE CASCADE, " +
-                "FOREIGN KEY(id_adm) REFERENCES usuario(id_usuario) ON DELETE CASCADE)";
-        executeSQL(sql, "Tabela 'administracao' criada com sucesso!");
-    }
+    public void createAdmUsuarioTable() {
+      String sql = "CREATE TABLE IF NOT EXISTS adm_usuario (" +
+              "id_adm INT, " +
+              "id_usuario_administrado INT, " +
+              "FOREIGN KEY(id_usuario_administrado) REFERENCES usuario(id_usuario), " +
+              "FOREIGN KEY(id_adm) REFERENCES usuario(id_usuario))";
+      executeSQL(sql, "Tabela 'administracao' criada com sucesso!");
+  }
+
+
 
     public void createAdministradorTable() {
         String sql = "CREATE TABLE IF NOT EXISTS administrador (" +

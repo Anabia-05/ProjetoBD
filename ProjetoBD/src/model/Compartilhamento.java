@@ -63,14 +63,14 @@ public class Compartilhamento {
     public boolean insertCompart(Connection connection){
         String sql = "INSERT INTO compartilhamento(id_arquivo,data,id_dono) VALUES (?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, idArquivo);
             stmt.setDate(2, java.sql.Date.valueOf(data));
             stmt.setInt(3, idDono);
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-            
+
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.idComp = generatedKeys.getInt(1); // Obtendo o ID gerado

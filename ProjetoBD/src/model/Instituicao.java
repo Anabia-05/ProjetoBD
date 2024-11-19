@@ -73,7 +73,7 @@ public class Instituicao {
     public boolean insertInstituicao(Connection connection){
         String sql = "INSERT INTO instituicao(nome,causa_social,endereco,id_plano) VALUES (?,?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, nome);
             stmt.setString(2, causaSocial);
             stmt.setString(3, endereco);
@@ -81,7 +81,7 @@ public class Instituicao {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-            
+
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.idInstituicao = generatedKeys.getInt(1); // Obtendo o ID gerado

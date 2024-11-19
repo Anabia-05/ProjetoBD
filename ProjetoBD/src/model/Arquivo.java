@@ -118,7 +118,7 @@ public class Arquivo {
     public boolean insertArquivo(Connection connection){
         String sql = "INSERT INTO arquivo(nome,tipo,permissoes_acesso,tamanho,data_ultima_mod,localizacao,URL,id_usuario) VALUES (?,?,?,?,?,?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, nome);
             stmt.setString(2, tipo);
             stmt.setString(3, permissoesAcesso);
@@ -128,7 +128,7 @@ public class Arquivo {
             stmt.setString(7, url);
             stmt.setInt(8, idUsuario);
             int affectedRows = stmt.executeUpdate();
-            
+
             // Verificando se alguma linha foi afetada
             if (affectedRows > 0) {
                 // pegando o id gerado pelo auto increment da insercao
@@ -151,12 +151,12 @@ public class Arquivo {
 
     public boolean chavearArquivo(Connection connection) {
         String sql = "{CALL chavear_arquivo(?)}";
-        
+
         try (CallableStatement stmt = connection.prepareCall(sql)) {
             stmt.setInt(1, this.idArquivo);
-    
+
             stmt.executeUpdate();
-    
+
             System.out.println("Stored procedure executed successfully!");
             return true;
         } catch (SQLException e) {

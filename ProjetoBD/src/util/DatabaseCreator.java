@@ -19,6 +19,7 @@ public class DatabaseCreator {
             tableCreator.createPlanoTable();
             tableCreator.createInstituicaoTable();
             tableCreator.createUsuarioTable();
+            tableCreator.createAdmUsuarioTable();
             tableCreator.createAdministradorTable();
             tableCreator.createSuporteTable();
             tableCreator.createArquivoTable();

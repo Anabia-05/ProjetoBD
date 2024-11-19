@@ -96,18 +96,18 @@ public class Suporte {
     public boolean insertSuport(Connection connection){
         String sql = "INSERT INTO suporte(descricao,data,hora,id_usuario,id_arquivo,id_adm) VALUES (?,?,?,?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setString(1, descricao);
             stmt.setDate(2, java.sql.Date.valueOf(data));
             stmt.setTime(3, java.sql.Time.valueOf(hora));
             stmt.setInt(4, idUsuario);
             stmt.setInt(5, idArquivo);
             stmt.setInt(6, idAdm);
-           
+
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-            
+
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.idSuporte = generatedKeys.getInt(1); // Obtendo o ID gerado
@@ -119,7 +119,7 @@ public class Suporte {
                 System.out.println("Erro: Nenhuma linha afetada na inserção.");
                 return false;
             }
-          
+
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

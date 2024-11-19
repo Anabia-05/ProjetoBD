@@ -85,7 +85,7 @@ public class Operacoes {
     public boolean insertOperacoes(Connection connection){
         String sql = "INSERT INTO operacoes(data,hora,tipo_operacao,id_usuario,id_arquivo) VALUES (?,?,?,?,?)";
 
-        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setDate(1, java.sql.Date.valueOf(data));
             stmt.setTime(2, java.sql.Time.valueOf(hora));
             stmt.setString(3, tipoOperacao);
@@ -96,7 +96,7 @@ public class Operacoes {
             int affectedRows = stmt.executeUpdate();
 
             if (affectedRows > 0) {
-            
+
                 try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         this.idOp = generatedKeys.getInt(1); // Obtendo o ID gerado
