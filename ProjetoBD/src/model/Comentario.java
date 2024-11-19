@@ -2,9 +2,8 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Time;
-import java.util.Date;
 
 public class Comentario {
     private int idComent;
@@ -14,8 +13,7 @@ public class Comentario {
     private int idUsuario;
     private int idArquivo;
 
-    public Comentario(int idComent, String conteudo, String data, String hora, int idUsuario, int idArquivo) {
-        this.idComent = idComent;
+    public Comentario(String conteudo, String data, String hora, int idUsuario, int idArquivo) {
         this.conteudo = conteudo;
         this.data = data;
         this.hora = hora;
@@ -91,9 +89,21 @@ public class Comentario {
             stmt.setTime(3, java.sql.Time.valueOf(hora));
             stmt.setInt(4, idUsuario);
             stmt.setInt(5, idArquivo);
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos na tabela Comentario com sucesso!");
-            return true;
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+            
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idComent = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Comentario inserido com ID: " + this.idComent);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

@@ -2,8 +2,9 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
+
 
 public class Compartilhamento {
     private int idComp;
@@ -11,8 +12,7 @@ public class Compartilhamento {
     private String data;
     private int idDono;
 
-    public Compartilhamento(int idComp, int idArquivo, String data, int idDono) {
-        this.idComp = idComp;
+    public Compartilhamento(int idArquivo, String data, int idDono) {
         this.idArquivo = idArquivo;
         this.data = data;
         this.idDono = idDono;
@@ -67,9 +67,21 @@ public class Compartilhamento {
             stmt.setInt(1, idArquivo);
             stmt.setDate(2, java.sql.Date.valueOf(data));
             stmt.setInt(3, idDono);
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos na tabela Compartilhamento com sucesso!");
-            return true;
+            int affectedRows = stmt.executeUpdate();
+
+            if (affectedRows > 0) {
+            
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idComp = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Compartilhamento inserido com ID: " + this.idComp);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;

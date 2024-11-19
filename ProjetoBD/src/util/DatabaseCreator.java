@@ -20,7 +20,6 @@ public class DatabaseCreator {
             tableCreator.createInstituicaoTable();
             tableCreator.createUsuarioTable();
             tableCreator.createAdministradorTable();
-            tableCreator.createAdministradorTable();
             tableCreator.createSuporteTable();
             tableCreator.createArquivoTable();
             tableCreator.createCompartilhamentoTable();
