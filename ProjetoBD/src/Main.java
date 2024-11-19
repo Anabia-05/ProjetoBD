@@ -17,9 +17,8 @@ public class Main {
 
         try (Connection connection = DBConnection.getConnection()) {
             System.out.println("Conexão com o banco de dados estabelecida.");
-            String sqlScriptPath = "ProjetoBD/src/db/createTable.sql";
-            DatabaseCreator databaseCreator = new DatabaseCreator(connection,sqlScriptPath);
-            databaseCreator.executeSqlScript();
+            DatabaseCreator databaseCreator = new DatabaseCreator(connection);
+            databaseCreator.executeTableCreation();
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Erro ao conectar ao banco de dados.");

@@ -9,8 +9,7 @@ public class Administrador {
     private int idAdm;
     private int idUsuarioAdm;
 
-    public Administrador(int idAdm, int idUsuarioAdm) {
-        this.idAdm = idAdm;
+    public Administrador(int idUsuarioAdm) {
         this.idUsuarioAdm = idUsuarioAdm;
     }
 
@@ -42,9 +41,21 @@ public class Administrador {
 
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setInt(1, idUsuarioAdm);
-            stmt.executeUpdate();
-            System.out.println("Dados inseridos na tabela adminstrador com sucesso!");
-            return true;
+            int affectedRows = stmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                // pegando o id gerado pelo auto increment da insercao
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        this.idAdm = generatedKeys.getInt(1); // Obtendo o ID gerado
+                        System.out.println("Administrador inserido com ID: " + this.idAdm);
+                    }
+                }
+                return true;
+            } else {
+                System.out.println("Erro: Nenhuma linha afetada na inserção.");
+                return false;
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
