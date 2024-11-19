@@ -37,7 +37,7 @@ public class Administrador {
                 '}';
     }
     public boolean insertAdm(Connection connection){
-        String sql = "INSERT INTO admistrador(id_usuario_adm) VALUES (?)";
+        String sql = "INSERT INTO administrador(id_usuario_adm) VALUES (?)";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             stmt.setInt(1, idUsuarioAdm);

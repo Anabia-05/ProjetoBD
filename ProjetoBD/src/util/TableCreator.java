@@ -49,13 +49,13 @@ public class TableCreator {
 
     public void createAdmUsuarioTable() {
       String sql = "CREATE TABLE IF NOT EXISTS adm_usuario (" +
-              "id_adm INT, " +
-              "id_usuario_administrado INT, " +
-              "FOREIGN KEY(id_usuario_administrado) REFERENCES usuario(id_usuario), " +
-              "FOREIGN KEY(id_adm) REFERENCES usuario(id_usuario))";
-      executeSQL(sql, "Tabela 'administracao' criada com sucesso!");
-  }
-
+                 "id_adm INT, " +
+                 "id_usuario_administrado INT, " +
+                 "PRIMARY KEY (id_adm, id_usuario_administrado), " +
+                 "FOREIGN KEY (id_adm) REFERENCES usuario(id_usuario) ON DELETE CASCADE, " +
+                 "FOREIGN KEY (id_usuario_administrado) REFERENCES usuario(id_usuario) ON DELETE CASCADE)";
+    executeSQL(sql, "Tabela 'adm_usuario' criada com sucesso!");
+}
 
 
     public void createAdministradorTable() {
@@ -104,6 +104,7 @@ public class TableCreator {
     String sql = "CREATE TABLE IF NOT EXISTS compartilhamento (" +
                  "id_comp INT AUTO_INCREMENT, " +
                  "id_arquivo INT, " +
+                 "data DATE, " +
                  "id_dono INT, " +
                  "PRIMARY KEY(id_comp), " +
                  "FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo) ON DELETE CASCADE, " +
@@ -219,7 +220,7 @@ public class TableCreator {
       String contaUsuarios = "CREATE PROCEDURE conta_usuarios(IN idArquivoEscolhido INT) " +
               "BEGIN " +
               "DECLARE contUsuario INT DEFAULT 0; " +
-              "SELECT COUNT(DISTINCT id_usuario) INTO contUsuario FROM compartilhamento WHERE id_arquivo = idArquivoEscolhido; " +
+              "SELECT COUNT(DISTINCT id_dono) INTO contUsuario FROM compartilhamento WHERE id_arquivo = idArquivoEscolhido; " +
               "SELECT contUsuario AS resultados; " +
               "END;";
       executeSQL(contaUsuarios, "Procedure 'conta_usuarios' criada com sucesso!");

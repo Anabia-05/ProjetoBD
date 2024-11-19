@@ -5,11 +5,13 @@ import java.util.Scanner;
 import model.AdmUsuario;
 import model.Administrador;
 import model.Arquivo;
+import model.Compartilhamento;
 import model.Instituicao;
 import model.Plano;
 import model.Usuario;
 import util.DBConnection;
 import util.DatabaseCreator;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -215,7 +217,14 @@ public class Main {
         if (arquivo3.insertArquivo(connection)) {
             System.out.println("Arquivo 'imagem1.jpg' inserido com sucesso!");
         }
-
+        Compartilhamento compartilhamento = new Compartilhamento(1,"2024-11-18", 1);
+        if (compartilhamento.insertCompart(connection)) {
+          System.out.println("Compartilhamento inserido com sucesso");
+      }
+      Compartilhamento compartilhamento2 = new Compartilhamento(1,"2024-11-18", 2);
+        if (compartilhamento2.insertCompart(connection)) {
+          System.out.println("Compartilhamento inserido com sucesso");
+      }
 
     } catch (Exception e) {
         System.out.println("Erro ao inserir dados: " + e.getMessage());
@@ -407,19 +416,29 @@ private static void verificarAtividadesRecentes(Connection connection) {
 }
 
 private static void contarUsuariosComAcesso(Connection connection, Scanner scanner) {
-    try {
-        System.out.print("Informe o ID do arquivo para contar usuários com acesso: ");
-        int id = scanner.nextInt();
+  try {
+      System.out.print("Informe o ID do arquivo para contar usuários com acesso: ");
+      int id = scanner.nextInt();
 
-        String sql = "{CALL conta_usuarios(?)}";
-        try (var callableStatement = connection.prepareCall(sql)) {
-            callableStatement.setInt(1, id);
-            callableStatement.execute();
-            System.out.println("Contagem de usuários com acesso realizada!");
-        }
-    } catch (SQLException e) {
-        System.out.println("Erro ao contar usuários: " + e.getMessage());
-    }
+      // Chama a procedure
+      String sql = "{CALL conta_usuarios(?)}";
+      try (var callableStatement = connection.prepareCall(sql)) {
+          callableStatement.setInt(1, id);
+
+          // Executa a procedure
+          try (var resultSet = callableStatement.executeQuery()) {
+              if (resultSet.next()) {
+                  int contagem = resultSet.getInt("resultados");
+                  System.out.println("Número de usuários com acesso: " + contagem);
+              } else {
+                  System.out.println("Nenhum usuário encontrado com acesso para o arquivo de ID " + id);
+              }
+          }
+
+      }
+  } catch (SQLException e) {
+      System.out.println("Erro ao contar usuários: " + e.getMessage());
+  }
 }
 private static void chavearArquivo(Connection connection, Scanner scanner) {
   try {
