@@ -1,37 +1,45 @@
 package util;
+
 import java.sql.Connection;
-import java.sql.Statement;
 import java.sql.SQLException;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import util.TableCreator;
 
 public class DatabaseCreator {
-    Connection connection;
-    String sqlScriptPath = "ProjetoBD/src/db/createTable.sql";
+    private Connection connection;
 
-    public DatabaseCreator(Connection connection, String sqlScriptPath) {
+    public DatabaseCreator(Connection connection) {
         this.connection = connection;
-        this.sqlScriptPath = sqlScriptPath;
     }
 
-    public void executeSqlScript() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(this.sqlScriptPath))) {
-            StringBuilder sql = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                sql.append(line).append("\n");
-            }
+    public void executeTableCreation() {
+        try {
+            TableCreator tableCreator = new TableCreator(connection);
 
-            try (Statement statement = this.connection.createStatement()) {
-                statement.executeUpdate(sql.toString());
-                System.out.println("Script SQL executado com sucesso!");
-            } catch (SQLException e) {
-                System.err.println(e.getMessage());
-            }
+            // Chamando os métodos de criação das tabelas
+            tableCreator.createPlanoTable();
+            tableCreator.createInstituicaoTable();
+            tableCreator.createUsuarioTable();
+            tableCreator.createAdministradorTable();
+            tableCreator.createAdministradorTable();
+            tableCreator.createSuporteTable();
+            tableCreator.createArquivoTable();
+            tableCreator.createCompartilhamentoTable();
+            tableCreator.createComentarioTable();
+            tableCreator.createHistoricoTable();
+            tableCreator.createOperacoesTable();
+            tableCreator.createTriggers();
+            tableCreator.createProcedures();
+            tableCreator.createAtividadesRecentesTable();
+            tableCreator.createConfereDataFunction();
+            tableCreator.createRolePapelUsuario(1);
+            tableCreator.createRolePapelInst();
+            tableCreator.createRolePapelAdm();
+            tableCreator.createViews();
 
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
+            System.out.println("Todas as tabelas foram criadas com sucesso!");
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.err.println("Erro ao executar a criação de tabelas: " + e.getMessage());
         }
     }
 }
