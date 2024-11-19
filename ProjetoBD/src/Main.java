@@ -5,7 +5,9 @@ import java.util.Scanner;
 import model.AdmUsuario;
 import model.Administrador;
 import model.Arquivo;
+import model.AtividadesRecentes;
 import model.Compartilhamento;
+import model.Historico;
 import model.Instituicao;
 import model.Plano;
 import model.Usuario;
@@ -224,6 +226,14 @@ public class Main {
       Compartilhamento compartilhamento2 = new Compartilhamento(1,"2024-11-18", 2);
         if (compartilhamento2.insertCompart(connection)) {
           System.out.println("Compartilhamento inserido com sucesso");
+      }
+      Historico historico = new Historico("nada","2024-11-18", "08:08:07",1, 1);
+        if (historico.insertHistorico(connection)) {
+          System.out.println("Compartilhamento inserido com sucesso");
+      }
+      AtividadesRecentes atividadesRecentes = new AtividadesRecentes(1,"2024-01-01", "não_prioritário");
+        if (atividadesRecentes.insertAtividades(connection)) {
+          System.out.println("Atividades inseridas com sucesso");
       }
 
     } catch (Exception e) {

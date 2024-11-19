@@ -35,6 +35,7 @@ public class DatabaseCreator {
             tableCreator.createRolePapelInst();
             tableCreator.createRolePapelAdm();
             tableCreator.createViews();
+            tableCreator.addCascadeOnDelete();
 
             System.out.println("Todas as tabelas foram criadas com sucesso!");
         } catch (Exception e) {

@@ -418,7 +418,58 @@ public void createRolePapelAdm(){
   executeSQL(grantRoleToUserSQL, "Role concedida ao usuário 'webdriver_user'.");
 
 }
+public void addCascadeOnDelete() {
+  // Comandos SQL para adicionar ON DELETE CASCADE para as chaves estrangeiras
+  String[] sqlCommands = {
+      "ALTER TABLE adm_usuario " +
+          "DROP FOREIGN KEY fk_adm_usuario, " +
+          "ADD CONSTRAINT fk_adm_usuario FOREIGN KEY(id_adm) REFERENCES usuario(id_usuario) ON DELETE CASCADE;",
 
+      "ALTER TABLE suporte " +
+          "DROP FOREIGN KEY fk_suporte_usuario, " +
+          "ADD CONSTRAINT fk_suporte_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE;",
+
+      "ALTER TABLE suporte " +
+          "DROP FOREIGN KEY fk_suporte_arquivo, " +
+          "ADD CONSTRAINT fk_suporte_arquivo FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo) ON DELETE CASCADE;",
+
+      "ALTER TABLE suporte " +
+          "DROP FOREIGN KEY fk_suporte_adm, " +
+          "ADD CONSTRAINT fk_suporte_adm FOREIGN KEY(id_adm) REFERENCES administrador(id_adm) ON DELETE CASCADE;",
+
+      "ALTER TABLE arquivo " +
+          "DROP FOREIGN KEY fk_arquivo_usuario, " +
+          "ADD CONSTRAINT fk_arquivo_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE;",
+
+      "ALTER TABLE comentario " +
+          "DROP FOREIGN KEY fk_comentario_usuario, " +
+          "ADD CONSTRAINT fk_comentario_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE;",
+
+      "ALTER TABLE comentario " +
+          "DROP FOREIGN KEY fk_comentario_arquivo, " +
+          "ADD CONSTRAINT fk_comentario_arquivo FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo) ON DELETE CASCADE;",
+
+      "ALTER TABLE historico " +
+          "DROP FOREIGN KEY fk_historico_usuario_alterou, " +
+          "ADD CONSTRAINT fk_historico_usuario_alterou FOREIGN KEY(id_usuario_alterou) REFERENCES usuario(id_usuario) ON DELETE CASCADE;",
+
+      "ALTER TABLE historico " +
+          "DROP FOREIGN KEY fk_historico_arquivo, " +
+          "ADD CONSTRAINT fk_historico_arquivo FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo) ON DELETE CASCADE;",
+
+      "ALTER TABLE operacoes " +
+          "DROP FOREIGN KEY fk_operacoes_usuario, " +
+          "ADD CONSTRAINT fk_operacoes_usuario FOREIGN KEY(id_usuario) REFERENCES usuario(id_usuario) ON DELETE CASCADE;",
+
+      "ALTER TABLE operacoes " +
+          "DROP FOREIGN KEY fk_operacoes_arquivo, " +
+          "ADD CONSTRAINT fk_operacoes_arquivo FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo) ON DELETE CASCADE;",
+
+      "ALTER TABLE atividades_recentes " +
+          "DROP FOREIGN KEY fk_atividades_arquivo, " +
+          "ADD CONSTRAINT fk_atividades_arquivo FOREIGN KEY(id_arquivo) REFERENCES arquivo(id_arquivo) ON DELETE CASCADE;"
+  };
+}
 
 private void executeSQL(String sql, String successMessage) {
   try (Statement statement = connection.createStatement()) {
